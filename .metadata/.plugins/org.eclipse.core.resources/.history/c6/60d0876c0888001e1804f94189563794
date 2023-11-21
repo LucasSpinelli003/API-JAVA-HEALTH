@@ -1,0 +1,93 @@
+package br.com.healthsolu.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import br.com.fiap.healthsolu.exception.BadInfoException;
+import br.com.fiap.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.model.ContatoUsuario;
+
+public class ContatoUsuarioDao {
+
+		private Connection conn;
+		
+		public ContatoUsuarioDao(Connection conn) {
+			super();
+			this.conn = conn;
+		}
+
+		public void cadastrar(ContatoUsuario contatoUsuario) throws ClassNotFoundException, SQLException, BadInfoException {
+			PreparedStatement stmm = conn.prepareStatement("select * from t_sip_contato_usuario");
+
+			ResultSet resultGet = stmm.executeQuery();
+
+			List<ContatoUsuario> lista = new ArrayList<ContatoUsuario>();
+
+			int id = 0;
+		
+			while (resultGet.next()) {
+				ContatoUsuario contatoUsuarioGet = parse(resultGet);
+				lista.add(contatoUsuarioGet);
+			}
+			if(lista.size() == 0) {
+				 id = 1;
+			}
+			id = lista.size() + 1;
+			
+			PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_contato_usuario (id_contato_usuario, email,"
+					+ "telefone) "
+					+ "values (?, ?, ?)");
+
+			stm.setInt(1, id);
+			stm.setString(2, contatoUsuario.getEmail());
+			stm.setString(3, contatoUsuario.getTelefone());
+			
+			stm.executeUpdate();
+		}
+		
+		private ContatoUsuario parse(ResultSet result) throws SQLException {
+			int id = result.getInt("id_contato_usuario");
+			String email = result.getString("email");
+			String telefone = result.getString("telefone");
+			
+			ContatoUsuario contatoUsuario = new ContatoUsuario(id,email,telefone);
+			return contatoUsuario;
+		}
+		
+		public List<ContatoUsuario> listar() throws ClassNotFoundException, SQLException {
+
+			PreparedStatement stm = conn.prepareStatement("select * from t_sip_contato_usuario");
+
+			ResultSet result = stm.executeQuery();
+
+			List<ContatoUsuario> lista = new ArrayList<ContatoUsuario>();
+
+			while (result.next()) {
+				ContatoUsuario contatoUsuario = parse(result);
+				lista.add(contatoUsuario);
+			}
+			return lista;
+		}
+		public ContatoUsuario pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+
+			PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_contato_usuario where id_contato_usuario = ?");
+
+			stm.setInt(1, id);
+
+			ResultSet result = stm.executeQuery();
+
+			if (!result.next()) {
+				throw new IdNotFoundException("Contato Segurado não encontrado");
+			}
+			ContatoUsuario contatoUsuario = parse(result);
+			return contatoUsuario;
+		}
+		
+		
+		
+
+
+}

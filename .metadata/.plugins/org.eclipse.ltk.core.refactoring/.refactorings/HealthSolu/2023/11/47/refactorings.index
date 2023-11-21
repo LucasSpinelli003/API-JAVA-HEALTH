@@ -1,0 +1,22 @@
+1700502819694	Rename package 'br.com.fiap.healthsolu.source'
+1700502835085	Rename compilation unit 'LoginUsuarioSource.java'
+1700502861297	Rename package 'br.com.fiap.helthsolu.exception'
+1700502965608	Rename type 'UsuarioModel'
+1700502980528	Rename type 'UsuarioDao'
+1700503014674	Rename type 'LoginUsuarioService'
+1700506951051	Rename type 'EnderecoSeguradoService'
+1700511374401	Delete element
+1700511445629	Copy compilation unit
+1700511458701	Copy compilation unit
+1700511462112	Delete element
+1700528010671	Delete element
+1700528018302	Delete element
+1700528025715	Delete element
+1700528033133	Delete element
+1700537567938	Rename type 'Login'
+1700537614582	Rename type 'LoginDao'
+1700537633411	Rename type 'LoginService'
+1700537645073	Rename type 'LoginResource'
+1700539250041	Copy compilation unit
+1700540541026	Copy compilation unit
+1700540924965	Copy compilation unit

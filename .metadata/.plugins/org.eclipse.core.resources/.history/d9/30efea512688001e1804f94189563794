@@ -1,0 +1,73 @@
+package br.com.fiap.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import br.com.fiap.healthsolu.exception.BadInfoException;
+import br.com.fiap.healthsolu.exception.GenderNotFoundException;
+import br.com.fiap.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.dao.EnderecoUsuarioDao;
+import br.com.healthsolu.dao.TmbDao;
+import br.com.healthsolu.dao.UsuarioDao;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.EnderecoUsuario;
+import br.com.healthsolu.model.Tmb;
+import br.com.healthsolu.model.Usuario;
+
+public class TmbService {
+	private EnderecoUsuarioDao enderecoUsuarioDao;
+	private UsuarioDao usuarioDao;
+	private TmbDao tmbDao;
+	
+	public TmbService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		usuarioDao = new UsuarioDao(conn);
+		enderecoUsuarioDao = new EnderecoUsuarioDao(conn);
+		tmbDao = new TmbDao(conn);
+		
+		}
+	
+
+	public void cadastrar(Tmb tmb) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
+		
+		double resultTmb = usuarioDao.calculoTmb(tmb.getUsuario().getId());
+		tmb.setResultadoTmb(resultTmb);
+
+		
+		tmbDao.cadastrar(tmb);
+	}
+	
+	public List<Tmb> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+		List<Tmb> listaLogin = tmbDao.listar();
+		
+		List<Tmb> newList = new ArrayList<Tmb>();
+		
+		for (Tmb tmb : listaLogin) {
+			if (tmb.getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(tmb.getUsuario().getId());
+				tmb.setUsuario(usuario);
+			}
+			
+			newList.add(tmb);
+			
+		}
+		
+		
+		
+		return newList;
+	}
+	
+	public Usuario pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+		Usuario lg = usuarioDao.pesquisar(id);
+		
+		if (lg.getEnderecoUsuario() != null) {
+			EnderecoUsuario enderecoUsuario = enderecoUsuarioDao.pesquisar(lg.getEnderecoUsuario().getId());
+			lg.setEnderecoUsuario(enderecoUsuario);
+		}
+		
+		return lg;
+	}
+	
+	}
+	

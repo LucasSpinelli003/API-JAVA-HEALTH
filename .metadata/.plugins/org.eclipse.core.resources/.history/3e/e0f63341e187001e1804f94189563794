@@ -1,0 +1,30 @@
+package br.com.fiap.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import br.com.fiap.healthsolu.exception.BadInfoException;
+import br.com.fiap.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.dao.ContatoUsuarioDao;
+import br.com.healthsolu.dao.LoginDao;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.Login;
+public class ContatoUsuarioService {
+		private ContatoUsuarioDao contatoUsuarioDao;
+		
+		public ContatoUsuarioService() throws ClassNotFoundException, SQLException {
+			Connection conn = ConnectionFactory.getConnection();
+			contatoUsuarioDao = new ContatoUsuarioDao(conn);
+			}
+		
+
+		public void cadastrar(Login login) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException {
+			loginDao.cadastrar(login);
+		}
+		
+		public List<Login> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+			return loginDao.listar();
+		}
+
+}

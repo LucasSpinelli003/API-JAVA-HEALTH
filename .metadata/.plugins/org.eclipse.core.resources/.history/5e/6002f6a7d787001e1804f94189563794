@@ -1,0 +1,9 @@
+package br.com.healthsolu.model;
+
+public class EnderecoUsuario {
+	
+	
+	private int id,numero;
+	private String cep,logradouro,bairro,siglaEstado,nomeCidade;
+
+}

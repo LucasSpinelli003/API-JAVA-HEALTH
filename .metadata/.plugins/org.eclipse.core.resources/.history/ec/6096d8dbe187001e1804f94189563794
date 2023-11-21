@@ -1,0 +1,8 @@
+package br.com.fiap.healthsolu.resource;
+
+public class Snippet {
+	public static void main(String[] args) {
+		EnderecoUsuario
+	}
+}
+

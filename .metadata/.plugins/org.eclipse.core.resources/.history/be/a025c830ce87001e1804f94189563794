@@ -1,0 +1,11 @@
+package br.com.fiap.healthsolu.service;
+
+public class LoginUsuarioService {
+
+	
+	public void cadastrar(Usuario chamado) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException {
+		validar(chamado);
+		chamadoDao.cadastrar(chamado);
+	}
+	
+}

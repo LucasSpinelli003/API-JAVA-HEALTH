@@ -1,0 +1,51 @@
+package br.com.fiap.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import br.com.fiap.healthsolu.exception.BadInfoException;
+import br.com.fiap.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.dao.ContatoUsuarioDao;
+import br.com.healthsolu.dao.EnderecoUsuarioDao;
+import br.com.healthsolu.dao.LoginDao;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.ContatoUsuario;
+import br.com.healthsolu.model.EnderecoUsuario;
+import br.com.healthsolu.model.Login;
+
+public class LoginService {
+	private ContatoUsuarioDao contatoUsuarioDao;
+	private EnderecoUsuarioDao enderecoUsuarioDao;
+	private LoginDao loginDao;
+	
+	public LoginService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		loginDao = new LoginDao(conn);
+		contatoUsuarioDao = new ContatoUsuarioDao(conn);
+		enderecoUsuarioDao = new EnderecoUsuarioDao(conn);
+		
+		}
+	
+
+	public void cadastrar(Login login) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException {
+		loginDao.cadastrar(login);
+	}
+	
+	public List<Login> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+		Login lg = new Login();
+		
+		if (lg.getContatoUsuario() != null) {
+			ContatoUsuario contatoUsuario = contatoUsuarioDao.pesquisar(lg.getContatoUsuario().getId());
+			lg.setContatoUsuario(contatoUsuario);
+		}
+		if (lg.getEnderecoChamado() != null) {
+			EnderecoUsuario enderecoUsuario = enderecoUsuarioDao.pesquisar(lg.getEnderecoUsuario().getId());
+			lg.setEnderecoUsuario(enderecoUsuario);
+		}
+		
+		return loginDao.listar();
+	}
+	
+	
+}

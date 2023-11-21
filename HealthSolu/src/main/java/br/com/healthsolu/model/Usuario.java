@@ -1,0 +1,126 @@
+package br.com.healthsolu.model;
+
+import java.time.LocalDateTime;
+
+public class Usuario {
+	
+	private int id;
+	private String nome;
+	private String email;
+	private String senha;
+	private EnderecoUsuario enderecoUsuario;
+	private int idade;
+	private double peso;
+	private String sexo;
+	private double altura;
+	private String telefone;
+	private String nomeUsuario;
+	private LocalDateTime dataNascimento;
+
+	
+	public Usuario() {};
+
+	public Usuario(int id, String nome, String email, String senha, int idade, double peso, String sexo, double altura,
+			String telefone, String nomeUsuario, LocalDateTime dataNascimento) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.idade = idade;
+		this.peso = peso;
+		this.sexo = sexo;
+		this.altura = altura;
+		this.telefone = telefone;
+		this.nomeUsuario = nomeUsuario;
+		this.dataNascimento = dataNascimento;
+	}
+
+
+
+
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+	public LocalDateTime getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(LocalDateTime dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	public double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(double altura) {
+		this.altura = altura;
+	}
+
+	public int getIdade() {
+		return idade;
+	}
+
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+
+	public double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(double peso) {
+		this.peso = peso;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public EnderecoUsuario getEnderecoUsuario() {
+		return enderecoUsuario;
+	}
+
+	public void setEnderecoUsuario(EnderecoUsuario enderecoUsuario) {
+		this.enderecoUsuario = enderecoUsuario;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+		
+	
+}
