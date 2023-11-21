@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.healthsolu.exception.BadInfoException;
-import br.com.healthsolu.exception.GenderNotFoundException;
-import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.fiap.healthsolu.exception.BadInfoException;
+import br.com.fiap.healthsolu.exception.GenderNotFoundException;
+import br.com.fiap.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.model.EnderecoUsuario;
 import br.com.healthsolu.model.Tmb;
 import br.com.healthsolu.model.Usuario;
