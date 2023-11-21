@@ -27,7 +27,7 @@ public class PercentualGorduraService {
 
 	public void cadastrar(PercentualGordura percentualGordura) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
 		
-		double resultPercentualGordura = usuarioDao.calculoTmb(percentualGordura.getUsuario().getId());
+		double resultPercentualGordura = usuarioDao.calculoPercentualGordura(percentualGordura.getUsuario().getId());
 		percentualGordura.setResultadoPercentual(resultPercentualGordura);
 
 		

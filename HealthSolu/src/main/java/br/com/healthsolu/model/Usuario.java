@@ -8,7 +8,6 @@ public class Usuario {
 	private String nome;
 	private String email;
 	private String senha;
-	private EnderecoUsuario enderecoUsuario;
 	private int idade;
 	private double peso;
 	private String sexo;
@@ -88,15 +87,6 @@ public class Usuario {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-
-	public EnderecoUsuario getEnderecoUsuario() {
-		return enderecoUsuario;
-	}
-
-	public void setEnderecoUsuario(EnderecoUsuario enderecoUsuario) {
-		this.enderecoUsuario = enderecoUsuario;
-	}
-
 	public int getId() {
 		return id;
 	}

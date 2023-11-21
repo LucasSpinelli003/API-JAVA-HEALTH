@@ -9,6 +9,8 @@ public class PercentualGordura {
 	private String prevencaoDoencas;
 	
 	
+	public PercentualGordura() {}
+	
 	public PercentualGordura(int id, double resultadoPercentual, String doencasRelacionadas, String prevencaoDoencas) {
 		super();
 		this.id = id;

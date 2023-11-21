@@ -26,7 +26,7 @@ import br.com.healthsolu.model.Usuario;
 		}
 
 				public void cadastrar(PercentualGordura percentualGordura) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
-					PreparedStatement stmm = conn.prepareStatement("select * from t_sip_imc");
+					PreparedStatement stmm = conn.prepareStatement("select * from t_sip_percentual_gordura");
 
 					ResultSet resultGet = stmm.executeQuery();
 
@@ -45,26 +45,27 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					
-					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_imc (id_imc, id_usuario,"
-							+ "resultado_imc,doencas_relacionadas,prevencao_doencas) "
-							+ "values (?, ?, ?, ?, ?)");
+					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_percentual_gordura (ID_PERCENTUAL_GORDURA, id_usuario,"
+							+ "id_imc,RESULTADO_PERC_GORDURA,DOENCAS_RELACIONADAS,PREVENCAO_DOENCAS) "
+							+ "values (?, ?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
 					stm.setInt(2, percentualGordura.getUsuario().getId());
-					stm.setDouble(3, percentualGordura.getResultadoPercentual());
-					stm.setString(4, percentualGordura.getDoencasRelacionadas());
-					stm.setString(5, percentualGordura.getPrevencaoDoencas());
+					stm.setDouble(3, percentualGordura.getImc().getId());
+					stm.setDouble(4, percentualGordura.getResultadoPercentual());
+					stm.setString(5, percentualGordura.getDoencasRelacionadas());
+					stm.setString(6,percentualGordura.getPrevencaoDoencas());
 					
 					stm.executeUpdate();
 				}
 				
 				private PercentualGordura parse(ResultSet result) throws SQLException {
-					int id = result.getInt("id_percentual_gordura");
+					int id = result.getInt("ID_PERCENTUAL_GORDURA");
 					int id_usuario = result.getInt("id_usuario");
 					int id_imc = result.getInt("id_imc");
-					double resultadoPercentual = result.getDouble("resultado_perc_gordura");
-					String doencasRelacionadas = result.getString("doencas_relacionadas");
-					String prevencaoDoencas = result.getString("prevencaoDoencas");
+					double resultadoPercentual = result.getDouble("RESULTADO_PERC_GORDURA");
+					String doencasRelacionadas = result.getString("DOENCAS_RELACIONADAS");
+					String prevencaoDoencas = result.getString("PREVENCAO_DOENCAS");
 					
 					PercentualGordura percentualGordura = new PercentualGordura(id,resultadoPercentual,doencasRelacionadas,prevencaoDoencas);
 					

@@ -9,12 +9,9 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.healthsolu.exception.BadInfoException;
 import br.com.healthsolu.exception.GenderNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
-import br.com.healthsolu.model.EnderecoUsuario;
-import br.com.healthsolu.model.Tmb;
 import br.com.healthsolu.model.Usuario;
 
 public class UsuarioDao {
@@ -44,29 +41,27 @@ public class UsuarioDao {
 		}
 		id = lista.size() + 1;
 		
-		PreparedStatement stm = conn.prepareStatement("INSERT INTO T_SIP_USUARIO (ID_USUARIO,ID_ENDERECO_USUARIO,"
+		PreparedStatement stm = conn.prepareStatement("INSERT INTO T_SIP_USUARIO (ID_USUARIO,"
 				+ " NM_COMPLETO,IDADE,EMAIL,TELEFONE,NM_USUARIO,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		stm.setInt(1, id);
- 		stm.setInt(2, login.getEnderecoUsuario().getId());
-		stm.setString(3, login.getNome());
-		stm.setInt(4, login.getIdade());
-		stm.setString(5, login.getEmail());
-		stm.setString(6, login.getTelefone());
-		stm.setString(7, login.getNomeUsuario());
-		stm.setString(8, login.getSenha());
-		stm.setDouble(9, login.getPeso());
-		stm.setDouble(10, login.getAltura());
-		stm.setString(11, login.getSexo());
-		stm.setObject(12, login.getDataNascimento());
+		stm.setString(2, login.getNome());
+		stm.setInt(3, login.getIdade());
+		stm.setString(4, login.getEmail());
+		stm.setString(5, login.getTelefone());
+		stm.setString(6, login.getNomeUsuario());
+		stm.setString(7, login.getSenha());
+		stm.setDouble(8, login.getPeso());
+		stm.setDouble(9, login.getAltura());
+		stm.setString(10, login.getSexo());
+		stm.setObject(11, login.getDataNascimento());
 		
 		stm.executeUpdate();
 	}
 	
 	private Usuario parse(ResultSet result) throws SQLException {
 		int id = result.getInt("ID_USUARIO");
-		int idEnderecoUsuario = result.getInt("ID_ENDERECO_USUARIO");
 		String nome = result.getString("NM_COMPLETO");
 		int idade = result.getInt("IDADE");
 		String email = result.getString("EMAIL");
@@ -80,11 +75,6 @@ public class UsuarioDao {
 		
 		Usuario usuario = new Usuario(id,nome,email,senha,idade,peso,sexo,altura,telefone,nomeUsuario,dataNascimento);
 		
-		if (idEnderecoUsuario != 0) {
-			EnderecoUsuario enderecoUsuario = new EnderecoUsuario();
-			enderecoUsuario.setId(idEnderecoUsuario);
-			usuario.setEnderecoUsuario(enderecoUsuario);
-		}
 		
 		return usuario;
 	}
@@ -127,7 +117,7 @@ public class UsuarioDao {
 		ResultSet result = stm.executeQuery();
 
 		if (!result.next()) {
-			throw new IdNotFoundException("Endereco usuario não encontrado");
+			throw new IdNotFoundException("Usuario não encontrado");
 		}
 		Usuario usuario = parse(result);
 		LocalDateTime dataNascimento = usuario.getDataNascimento();
