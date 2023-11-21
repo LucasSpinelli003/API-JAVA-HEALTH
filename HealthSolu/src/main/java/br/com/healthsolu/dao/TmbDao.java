@@ -17,7 +17,6 @@ import br.com.healthsolu.model.Usuario;
 	public class TmbDao {
 	
 		private Connection conn;
-		private UsuarioDao usuarioDao;
 		
 		
 		public TmbDao(Connection conn) {

@@ -147,6 +147,51 @@ public class UsuarioDao {
         	throw new GenderNotFoundException("O sexo pode ser M ou F");
         }
 	}
+	public double calculoImc(int id) throws SQLException, IdNotFoundException {
+		PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_usuario where id_usuario = ?");
+		
+		stm.setInt(1, id);
+
+		ResultSet result = stm.executeQuery();
+
+		if (!result.next()) {
+			throw new IdNotFoundException("Usuário não encontrado");
+		}
+		Usuario usuario = parse(result);
+      
+        double imc = usuario.getPeso()/(usuario.getAltura()*usuario.getAltura());
+        
+        return imc;
+	}
+	public double calculoPercentualGordura(int id) throws SQLException, IdNotFoundException, GenderNotFoundException {
+		PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_usuario where id_usuario = ?");
+		
+		stm.setInt(1, id);
+
+		ResultSet result = stm.executeQuery();
+
+		if (!result.next()) {
+			throw new IdNotFoundException("Usuario não encontrado");
+		}
+		Usuario usuario = parse(result);
+		LocalDateTime dataNascimento = usuario.getDataNascimento();
+
+        LocalDate dataAtual = LocalDate.now();
+
+        double bT = 0;
+        
+        int idade = Period.between(dataNascimento.toLocalDate(), dataAtual).getYears();
+        
+        if(usuario.getSexo().equalsIgnoreCase("M")) {
+            bT = (1.20 * calculoImc(usuario.getId())) + (0.23 * idade) - (10.8 * 1) - 5.4;
+        } else if(usuario.getSexo().equalsIgnoreCase("F")) {
+            bT = (1.20 * calculoImc(usuario.getId())) + (0.23 * idade) - (10.8 * 0) - 5.4;
+        } else {
+            throw new GenderNotFoundException("O sexo só pode ser 'F' ou 'M'");
+        }
+        return bT;
+	}
+	
 	
 	
 	
