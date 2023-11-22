@@ -12,9 +12,7 @@ import br.com.healthsolu.exception.GenderNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.factory.ConnectionFactory;
 import br.com.healthsolu.model.PercentualGordura;
-import br.com.healthsolu.model.Imc;
 import br.com.healthsolu.model.Usuario;
-
 
 public class PercentualGorduraService {
 	private UsuarioDao usuarioDao;
@@ -25,15 +23,11 @@ public class PercentualGorduraService {
 		Connection conn = ConnectionFactory.getConnection();
 		usuarioDao = new UsuarioDao(conn);
 		percentualGorduraDao = new PercentualGorduraDao(conn);
-		imcDao = new ImcDao(conn);
 		
 		}
 	
 
 	public void cadastrar(PercentualGordura percentualGordura) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
-		Imc imc = usuarioDao.calculoImc(percentualGordura.getUsuario().getId());
-		
-		
 		
 		double resultPercentualGordura = usuarioDao.calculoPercentualGordura(percentualGordura.getUsuario().getId());
 		percentualGordura.setResultadoPercentual(resultPercentualGordura);

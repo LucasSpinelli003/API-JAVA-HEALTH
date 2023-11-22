@@ -13,7 +13,7 @@ import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.factory.ConnectionFactory;
 import br.com.healthsolu.model.PercentualGordura;
 import br.com.healthsolu.model.Imc;
-import br.com.healthsolu.model.Usuario;
+import br.com.healthsolu.model.usuario;
 
 
 public class PercentualGorduraService {

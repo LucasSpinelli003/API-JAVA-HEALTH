@@ -42,18 +42,19 @@ public class UsuarioDao {
 		id = lista.size() + 1;
 		
 		PreparedStatement stm = conn.prepareStatement("INSERT INTO T_SIP_USUARIO (ID_USUARIO,"
-				+ " NM_COMPLETO,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
+				+ " NM_COMPLETO,IDADE,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		stm.setInt(1, id);
 		stm.setString(2, login.getNome());
-		stm.setString(3, login.getEmail());
-		stm.setString(4, login.getTelefone());
-		stm.setString(5, login.getSenha());
-		stm.setDouble(6, login.getPeso());
-		stm.setDouble(7, login.getAltura());
-		stm.setString(8, login.getSexo());
-		stm.setObject(9, login.getDataNascimento());
+		stm.setInt(3, login.getIdade());
+		stm.setString(4, login.getEmail());
+		stm.setString(5, login.getTelefone());
+		stm.setString(6, login.getSenha());
+		stm.setDouble(7, login.getPeso());
+		stm.setDouble(8, login.getAltura());
+		stm.setString(9, login.getSexo());
+		stm.setObject(10, login.getDataNascimento());
 		
 		stm.executeUpdate();
 	}
@@ -61,6 +62,7 @@ public class UsuarioDao {
 	private Usuario parse(ResultSet result) throws SQLException {
 		int id = result.getInt("ID_USUARIO");
 		String nome = result.getString("NM_COMPLETO");
+		int idade = result.getInt("IDADE");
 		String email = result.getString("EMAIL");
 		String telefone = result.getString("TELEFONE");
 		String senha = result.getString("SENHA");
@@ -69,7 +71,7 @@ public class UsuarioDao {
 		String sexo = result.getString("GENERO");
 		LocalDateTime dataNascimento = result.getObject("DATA_NASCIMENTO", LocalDateTime.class);
 		
-		Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento);
+		Usuario usuario = new Usuario(id,nome,email,senha,idade,peso,sexo,altura,telefone,nomeUsuario,dataNascimento);
 		
 		
 		return usuario;

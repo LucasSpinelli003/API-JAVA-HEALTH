@@ -42,7 +42,7 @@ public class UsuarioDao {
 		id = lista.size() + 1;
 		
 		PreparedStatement stm = conn.prepareStatement("INSERT INTO T_SIP_USUARIO (ID_USUARIO,"
-				+ " NM_COMPLETO,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
+				+ " NM_COMPLETO,IDADE,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		stm.setInt(1, id);

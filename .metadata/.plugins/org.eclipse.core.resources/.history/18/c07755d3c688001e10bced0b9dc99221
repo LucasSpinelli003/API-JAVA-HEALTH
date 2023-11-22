@@ -61,8 +61,8 @@ import br.com.healthsolu.model.Usuario;
 				
 				private PercentualGordura parse(ResultSet result) throws SQLException {
 					int id = result.getInt("ID_PERCENTUAL_GORDURA");
-					int id_usuario = result.getInt("ID_USUARIO");
-					int id_imc = result.getInt("ID_IMC");
+					int id_usuario = result.getInt("id_usuario");
+					int id_imc = result.getInt("id_imc");
 					double resultadoPercentual = result.getDouble("RESULTADO_PERC_GORDURA");
 					String doencasRelacionadas = result.getString("DOENCAS_RELACIONADAS");
 					String prevencaoDoencas = result.getString("PREVENCAO_DOENCAS");
