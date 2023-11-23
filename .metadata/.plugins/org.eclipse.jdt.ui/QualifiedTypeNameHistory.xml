@@ -36,4 +36,7 @@
     <fullyQualifiedTypeName name="br.com.healthsolu.dao.TmbDao"/>
     <fullyQualifiedTypeName name="br.com.fiap.healthsolu.service.TmbService"/>
     <fullyQualifiedTypeName name="br.com.healthsolu.model.Tmb"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.exception.ClassificationNotFoundException"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.model.Dieta"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.dao.DietaDao"/>
 </qualifiedTypeNameHistroy>

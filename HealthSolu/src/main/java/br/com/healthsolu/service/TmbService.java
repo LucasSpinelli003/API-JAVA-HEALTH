@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.healthsolu.dao.TmbDao;
 import br.com.healthsolu.dao.UsuarioDao;
 import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.ClassificationNotFoundException;
 import br.com.healthsolu.exception.GenderNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.factory.ConnectionFactory;
@@ -26,8 +27,8 @@ public class TmbService {
 		}
 	
 
-	public void cadastrar(Tmb tmb) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
-		
+	public void cadastrar(Tmb tmb) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, ClassificationNotFoundException {
+		tmb.calculaClassificacao();
 		double resultTmb = usuarioDao.calculoTmb(tmb.getUsuario().getId());
 		tmb.setResultadoTmb(resultTmb);
 

@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.ClassificationNotFoundException;
 import br.com.healthsolu.exception.GenderNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.model.Tmb;
@@ -32,7 +33,7 @@ public class TmbResource {
 	//POST http://localhost:8080/HealthSolu/api/tmb (Cadastrar um produto)
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response cadastrar(Tmb tmb, @Context UriInfo uri) throws ClassNotFoundException, SQLException, IdNotFoundException, GenderNotFoundException {
+	public Response cadastrar(Tmb tmb, @Context UriInfo uri) throws ClassNotFoundException, SQLException, IdNotFoundException, GenderNotFoundException, ClassificationNotFoundException {
 		try {
 			service.cadastrar(tmb);
 			UriBuilder uriBuilder = uri.getAbsolutePathBuilder();

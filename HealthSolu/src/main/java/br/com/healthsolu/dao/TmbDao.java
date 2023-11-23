@@ -45,14 +45,15 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_tmb (id_tmb, id_usuario,"
-							+ "resultado_tmb,doencas_relacionadas,prevencao_doencas) "
-							+ "values (?, ?, ?, ?, ?)");
+							+ "resultado_tmb,doencas_relacionadas,prevencao_doencas,classificacao) "
+							+ "values (?, ?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
 					stm.setInt(2, tmb.getUsuario().getId());
 					stm.setDouble(3, tmb.getResultadoTmb());
 					stm.setString(4, tmb.getDoencasRelacionadas());
 					stm.setString(5, tmb.getPrevencaoDeDoencas());
+					stm.setString(6, tmb.getClassificacao());
 					
 					stm.executeUpdate();
 				}
@@ -63,8 +64,9 @@ import br.com.healthsolu.model.Usuario;
 					double resultadoTmb = result.getDouble("resultado_tmb");
 					String doencasRelacionadas = result.getString("doencas_relacionadas");
 					String prevencaoDeDoencas = result.getString("prevencao_doencas");
+					String classificacao = result.getString("classificacao");
 					
-					Tmb tmb = new Tmb(id,resultadoTmb,doencasRelacionadas,prevencaoDeDoencas);
+					Tmb tmb = new Tmb(id,resultadoTmb,doencasRelacionadas,prevencaoDeDoencas,classificacao);
 					
 					if (id_usuario != 0) {
 						Usuario usuario = new Usuario();

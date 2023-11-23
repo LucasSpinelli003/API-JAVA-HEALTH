@@ -1,0 +1,106 @@
+package br.com.healthsolu.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.GenderNotFoundException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.model.Dieta;
+import br.com.healthsolu.model.Usuario;
+
+
+	public class DietaDao {
+	
+		private Connection conn;
+		
+		
+		public DietaDao(Connection conn) {
+			super();
+			this.conn = conn;
+		}
+
+				public void cadastrar(Dieta dieta) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
+					PreparedStatement stmm = conn.prepareStatement("select * from t_sip_dieta_indicada");
+
+					ResultSet resultGet = stmm.executeQuery();
+
+					List<Dieta> lista = new ArrayList<Dieta>();
+
+					int id = 0;
+				
+					while (resultGet.next()) {
+						Dieta dietaGet = parse(resultGet);
+						lista.add(dietaGet);
+					}
+					if(lista.size() == 0) {
+						 id = 1;
+					}
+					id = lista.size() + 1;
+					
+					
+					
+					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_dieta_indicada (id_dieta_indicada, id_usuario,"
+							+ "qtd_carboidratos,qtd_proteinas,qtd_calorias) "
+							+ "values (?, ?, ?, ?, ?)");
+
+					stm.setInt(1, id);
+					stm.setInt(2, dieta.getUsuario().getId());
+					stm.setDouble(3, dieta.getQtd_carboidratos());
+					stm.setDouble(4, dieta.getQtd_proteinas());
+					stm.setDouble(5, dieta.getQtd_calorias());
+					
+					stm.executeUpdate();
+				}
+				
+				private Dieta parse(ResultSet result) throws SQLException {	
+					int id = result.getInt("id_dieta_indicada");
+					int id_usuario = result.getInt("id_usuario");
+					double qtdCarbo = result.getDouble("qtd_carboidratos");
+					double qtdProt = result.getDouble("qtd_proteinas");
+					double qtdCalo = result.getDouble("qtd_calorias");
+					
+					Dieta dieta = new Dieta(id,qtdCarbo,qtdProt,qtdCalo);
+					
+					if (id_usuario != 0) {
+						Usuario usuario = new Usuario();
+						usuario.setId(id_usuario);
+						dieta.setUsuario(usuario);
+					}
+					
+					return dieta;
+				}
+				
+				public List<Dieta> listar() throws ClassNotFoundException, SQLException {
+
+					PreparedStatement stm = conn.prepareStatement("select * from t_sip_dieta_indicada");
+
+					ResultSet result = stm.executeQuery();
+
+					List<Dieta> lista = new ArrayList<Dieta>();
+
+					while (result.next()) {
+						Dieta dieta = parse(result);
+						lista.add(dieta);
+					}
+					return lista;
+				}
+				public Dieta pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+
+					PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_dieta_indicada where id_dieta_indicada = ?");
+
+					stm.setInt(1, id);
+
+					ResultSet result = stm.executeQuery();
+
+					if (!result.next()) {
+						throw new IdNotFoundException("Dieta não encontrada");
+					}
+					Dieta dieta = parse(result);
+					return dieta;
+				}
+	}	
+

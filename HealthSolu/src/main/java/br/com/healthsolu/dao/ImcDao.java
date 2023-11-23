@@ -48,7 +48,7 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_imc (id_imc, id_usuario,"
-							+ "resultado_imc,doencas_relacionadas,prevencao_doencas, grau) "
+							+ "resultado_imc,doencas_relacionadas,prevencao_doencas, classificacao) "
 							+ "values (?, ?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
@@ -56,20 +56,20 @@ import br.com.healthsolu.model.Usuario;
 					stm.setDouble(3, imc.getResultadoImc());
 					stm.setString(4, imc.getDoencasRelacionadas());
 					stm.setString(5, imc.getPrevencaoDoencas());
-					stm.setString(6, imc.getGrau());
+					stm.setString(6, imc.getClassificacao());
 					
 					stm.executeUpdate();
 				}
 				
-				private Imc parse(ResultSet result) throws SQLException {
+				private Imc parse(ResultSet result) throws SQLException {	
 					int id = result.getInt("id_imc");
 					int id_usuario = result.getInt("id_usuario");
 					double resultadoImc = result.getDouble("resultado_imc");
 					String doencasRelacionadas = result.getString("doencas_relacionadas");
 					String prevencaoDeDoencas = result.getString("prevencao_doencas");
-					String grau = result.getString("grau");
+					String classificacao = result.getString("classificacao");
 					
-					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas,grau);
+					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas,classificacao);
 					
 					if (id_usuario != 0) {
 						Usuario usuario = new Usuario();

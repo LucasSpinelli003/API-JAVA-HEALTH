@@ -9,7 +9,7 @@ public class Imc {
 	private double resultadoImc;
 	private String doencasRelacionadas;
 	private String prevencaoDoencas;
-	private String grau;
+	private String classificacao;
 	
 	
 	
@@ -21,22 +21,22 @@ public class Imc {
 	//18,5 ou menos. Abaixo do normal.
 	
 	public void calculaDoencas() throws GrauNotFoundException {
-		if(grau.equalsIgnoreCase("Abaixo do normal")) {
+		if(classificacao.equalsIgnoreCase("Abaixo do normal")) {
 			doencasRelacionadas = "diabetes e hipertireoidismo, entre outros males, assim como pode acarretar distúrbios que chegam até mesmo colocar a vida em risco";
 			prevencaoDoencas = "Ganho de massa muscular atráves de uma dieta balanciada, uma rotina de treino, e claro, com um acompanhamento de um médico.";
-		}else if(grau.equalsIgnoreCase("Normal")){
+		}else if(classificacao.equalsIgnoreCase("Normal")){
 			doencasRelacionadas = "Saudável";
 			prevencaoDoencas = "Saudável";
-		}else if(grau.equalsIgnoreCase("Sobrepeso")) {
+		}else if(classificacao.equalsIgnoreCase("Sobrepeso")) {
 			doencasRelacionadas = "Hipertensão arterial, Aumento do colesterol e triglicérides, Diabetes, Apneia do sono, Acúmulo de gordura no fígado ,Infarto do miocárdio, Acidente vascular cerebral";
 			prevencaoDoencas = "Dieta e treino regrados, com enfase na perda de massa gorda, e claro, com um acompanhamento de um médico.";
-		}else if(grau.equalsIgnoreCase("Obesidade grau 1")) {
+		}else if(classificacao.equalsIgnoreCase("Obesidade grau 1")) {
 			doencasRelacionadas = "Hipertensão, Diabetes. O diabetes é uma doença caracterizada pelo aumento dos níveis de glicose no sangue, Colesterol Hipertrofia Ventricular, Doenças respiratórias. arterial, Aumento do colesterol e triglicérides, Diabetes, Apneia do sono, Acúmulo de gordura no fígado ,Infarto do miocárdio, Acidente vascular cerebral";
 			prevencaoDoencas = "Procurar um médico, e tentar manter uma alimentação adequada e a realização de atividades físicas";
-		}else if(grau.equalsIgnoreCase("Obesidade grau 2")) {
+		}else if(classificacao.equalsIgnoreCase("Obesidade grau 2")) {
 			doencasRelacionadas = "Hipertensão, Diabetes. O diabetes é uma doença caracterizada pelo aumento dos níveis de glicose no sangue, Colesterol Hipertrofia Ventricular, Doenças respiratórias. arterial, Aumento do colesterol e triglicérides, Diabetes, Apneia do sono, Acúmulo de gordura no fígado ,Infarto do miocárdio, Acidente vascular cerebral";
 			prevencaoDoencas = "Procurar um médico, e tentar manter uma alimentação adequada e a realização de atividades físicas";
-		}else if(grau.equalsIgnoreCase("Obesidade grau 2")) {
+		}else if(classificacao.equalsIgnoreCase("Obesidade grau 2")) {
 			doencasRelacionadas = "Hipertensão, Diabetes. O diabetes é uma doença caracterizada pelo aumento dos níveis de glicose no sangue, Colesterol Hipertrofia Ventricular, Doenças respiratórias. arterial, Aumento do colesterol e triglicérides, Diabetes, Apneia do sono, Acúmulo de gordura no fígado ,Infarto do miocárdio, Acidente vascular cerebral";
 			prevencaoDoencas = "Procure um médico urgente, é um quadro grave!";
 		}else {
@@ -47,38 +47,38 @@ public class Imc {
 	
 	public void calculaGrau() throws GrauNotFoundException {
 		if(resultadoImc<= 18.5) {
-			grau = "Abaixo do normal";
+			classificacao = "Abaixo do normal";
 		}else if(resultadoImc >= 18.6 && resultadoImc<= 24.9 ) {
-			grau = "Normal";
+			classificacao = "Normal";
 		}else if(resultadoImc >= 25.0  && resultadoImc<= 29.9) {
-			grau = "Sobrepeso";
+			classificacao = "Sobrepeso";
 		}else if(resultadoImc >= 30.0  && resultadoImc<= 34.9) {
-			grau = "Obesidade grau 1";
+			classificacao = "Obesidade grau 1";
 		}else if(resultadoImc >= 35.0  && resultadoImc<= 39.9) {
-			grau = "Obesidade grau 2";
+			classificacao = "Obesidade grau 2";
 		}else if(resultadoImc>=40) {
-			grau = "Obesidade grau 3";
+			classificacao = "Obesidade grau 3";
 		}else{
 			throw new GrauNotFoundException("Calculo do Grau incorreto");
 		}
 	}
 	public Imc() {}
 	
-	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String grau) {
+	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String classificacao) {
 		super();
 		this.id = id;
 		this.resultadoImc = resultadoImc;
 		this.doencasRelacionadas = doencasRelacionadas;
 		this.prevencaoDoencas = prevencaoDoencas;
-		this.grau = grau;
+		this.classificacao = classificacao;
 	}
 
-	public String getGrau() {
-		return grau;
+	public String getClassificacao() {
+		return classificacao;
 	}
 
-	public void setGrau(String grau) {
-		this.grau = grau;
+	public void setClassificacao(String classificacao) {
+		this.classificacao = classificacao;
 	}
 
 	public int getId() {
