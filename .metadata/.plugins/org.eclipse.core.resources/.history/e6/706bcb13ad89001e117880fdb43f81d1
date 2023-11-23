@@ -9,7 +9,6 @@ import br.com.healthsolu.dao.ImcDao;
 import br.com.healthsolu.dao.UsuarioDao;
 import br.com.healthsolu.exception.BadInfoException;
 import br.com.healthsolu.exception.GenderNotFoundException;
-import br.com.healthsolu.exception.GrauNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.factory.ConnectionFactory;
 import br.com.healthsolu.model.Imc;
@@ -27,12 +26,10 @@ public class ImcService {
 		}
 	
 
-	public void cadastrar(Imc imc) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, GrauNotFoundException {
+	public void cadastrar(Imc imc) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
 		
 		double resultImc = usuarioDao.calculoImc(imc.getUsuario().getId());
 		imc.setResultadoImc(resultImc);
-		imc.calculaGrau();
-		imc.calculaDoencas();
 		
 
 		

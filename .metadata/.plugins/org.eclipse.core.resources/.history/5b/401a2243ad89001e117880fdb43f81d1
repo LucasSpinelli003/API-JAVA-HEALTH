@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.healthsolu.exception.BadInfoException;
 import br.com.healthsolu.exception.GenderNotFoundException;
-import br.com.healthsolu.exception.GrauNotFoundException;
 import br.com.healthsolu.exception.IdNotFoundException;
 import br.com.healthsolu.model.Imc;
 import br.com.healthsolu.service.ImcService;
@@ -33,7 +32,7 @@ public class ImcResource {
 	//POST http://localhost:8080/HealthSolu/api/imc (Cadastrar um produto)
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response cadastrar(Imc imc, @Context UriInfo uri) throws ClassNotFoundException, SQLException, IdNotFoundException, GenderNotFoundException, GrauNotFoundException {
+	public Response cadastrar(Imc imc, @Context UriInfo uri) throws ClassNotFoundException, SQLException, IdNotFoundException, GenderNotFoundException {
 		try {
 			service.cadastrar(imc);
 			UriBuilder uriBuilder = uri.getAbsolutePathBuilder();

@@ -102,3 +102,12 @@
 0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:39:25 -0300] "GET /HealthSolu/api/usuarios HTTP/1.1" 404 726
 0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:39:32 -0300] "GET /HealthSolu/api/usuario HTTP/1.1" 200 663
 0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:40:01 -0300] "POST /HealthSolu/api/imc HTTP/1.1" 500 9954
+127.0.0.1 - - [22/Nov/2023:21:40:22 -0300] "GET / HTTP/1.1" 404 764
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:40:27 -0300] "POST /HealthSolu/api/imc HTTP/1.1" 500 14383
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:40:51 -0300] "POST /HealthSolu/api/imc HTTP/1.1" 201 -
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:40:56 -0300] "POST /HealthSolu/api/imc HTTP/1.1" 201 -
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:41:00 -0300] "POST /HealthSolu/api/imc HTTP/1.1" 201 -
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:41:07 -0300] "GET /HealthSolu/api/imc HTTP/1.1" 200 2157
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:42:28 -0300] "POST /HealthSolu/api/percentualGordura HTTP/1.1" 201 -
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:42:31 -0300] "POST /HealthSolu/api/percentualGordura HTTP/1.1" 201 -
+0:0:0:0:0:0:0:1 - - [22/Nov/2023:21:42:35 -0300] "GET /HealthSolu/api/percentualGordura HTTP/1.1" 200 2255
