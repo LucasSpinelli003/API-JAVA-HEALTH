@@ -1,0 +1,81 @@
+package br.com.healthsolu.model;
+
+public class Imc {
+	
+	private int id;
+	private Usuario usuario;
+	private double resultadoImc;
+	private String doencasRelacionadas;
+	private String prevencaoDoencas;
+	private String grau;
+	
+	
+	
+	//Acima de 40,0. Obesidade. grau III. ...
+	//Entre 35,0 e 39,9. Obesidade. grau II. ...
+	//Entre 30,0 e 34,9. Obesidade grau I. Sinal de alerta! ...
+	//Entre 25,0 e 29,9. Sobrepeso. ...
+	//Entre 18,6 e 24,9. Normal. ...
+	//18,5 ou menos. Abaixo do normal.
+	
+	
+	public void calculaGrau() {
+		if(resultadoImc<= 18.5) {
+			grau = "Abaixo do normal";
+		}else if(resultadoImc >= 18.6 || resultadoImc<= 24.9 ) {
+			grau = "Normal";
+		}else if(resultadoImc >= 18.6 || resultadoImc<= 24.9)
+	}
+	public Imc() {}
+	
+	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String grau) {
+		super();
+		this.id = id;
+		this.resultadoImc = resultadoImc;
+		this.doencasRelacionadas = doencasRelacionadas;
+		this.prevencaoDoencas = prevencaoDoencas;
+		this.grau = grau;
+	}
+
+	public String getGrau() {
+		return grau;
+	}
+
+	public void setGrau(String grau) {
+		this.grau = grau;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public double getResultadoImc() {
+		return resultadoImc;
+	}
+	public void setResultadoImc(double resultadoImc) {
+		this.resultadoImc = resultadoImc;
+	}
+	public String getDoencasRelacionadas() {
+		return doencasRelacionadas;
+	}
+	public void setDoencasRelacionadas(String doencasRelacionadas) {
+		this.doencasRelacionadas = doencasRelacionadas;
+	}
+	public String getPrevencaoDoencas() {
+		return prevencaoDoencas;
+	}
+	public void setPrevencaoDoencas(String prevencaoDoencas) {
+		this.prevencaoDoencas = prevencaoDoencas;
+	}
+	
+	
+	
+}

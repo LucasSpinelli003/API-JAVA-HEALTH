@@ -2,7 +2,6 @@ package br.com.healthsolu.model;
 
 public class PercentualGordura {
 	private int id;
-	private Usuario usuario;
 	private Imc imc;
 	private double resultadoPercentual;
 	private String doencasRelacionadas;
@@ -17,12 +16,6 @@ public class PercentualGordura {
 		this.resultadoPercentual = resultadoPercentual;
 		this.doencasRelacionadas = doencasRelacionadas;
 		this.prevencaoDoencas = prevencaoDoencas;
-	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 	public Imc getImc() {
 		return imc;

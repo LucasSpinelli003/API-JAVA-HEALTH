@@ -29,7 +29,7 @@ public class PercentualGorduraResource {
 		service = new PercentualGorduraService();
 	}
 	
-	//POST http://localhost:8080/HealthSolu/api/tmb (Cadastrar um produto)
+	//POST http://localhost:8080/HealthSolu/api/percentualGordura (Cadastrar um produto)
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response cadastrar(PercentualGordura percentualGordura, @Context UriInfo uri) throws ClassNotFoundException, SQLException, IdNotFoundException, GenderNotFoundException {
@@ -46,14 +46,14 @@ public class PercentualGorduraResource {
 		}
 	}
 	
-	//GET http://localhost:8080/HealthSolu/api/tmb   (Listar todos os produtos)
+	//GET http://localhost:8080/HealthSolu/api/percentualGordura   (Listar todos os produtos)
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PercentualGordura> lista() throws ClassNotFoundException, SQLException, IdNotFoundException {
 		return service.listar();
 	}
 
-	//GET http://localhost:8080/HealthSolu/api/tmb /1 (Pesquisar pelo Id)
+	//GET http://localhost:8080/HealthSolu/api/percentualGordura /1 (Pesquisar pelo Id)
 		@GET
 		@Path("/{id}")
 		@Produces(MediaType.APPLICATION_JSON)

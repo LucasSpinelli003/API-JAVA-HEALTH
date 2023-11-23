@@ -30,6 +30,7 @@ public class ImcService {
 		
 		double resultImc = usuarioDao.calculoImc(imc.getUsuario().getId());
 		imc.setResultadoImc(resultImc);
+		
 
 		
 		imcDao.cadastrar(imc);

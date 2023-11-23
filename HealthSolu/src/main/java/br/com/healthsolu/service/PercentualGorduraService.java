@@ -17,25 +17,21 @@ import br.com.healthsolu.model.Usuario;
 
 
 public class PercentualGorduraService {
-	private UsuarioDao usuarioDao;
 	private PercentualGorduraDao percentualGorduraDao;
 	private ImcDao imcDao;
+	private UsuarioDao usuarioDao;
 	
 	public PercentualGorduraService() throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionFactory.getConnection();
-		usuarioDao = new UsuarioDao(conn);
 		percentualGorduraDao = new PercentualGorduraDao(conn);
 		imcDao = new ImcDao(conn);
+		usuarioDao = new UsuarioDao(conn);
 		
 		}
 	
 
 	public void cadastrar(PercentualGordura percentualGordura) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
-		Imc imc = usuarioDao.calculoImc(percentualGordura.getUsuario().getId());
-		
-		
-		
-		double resultPercentualGordura = usuarioDao.calculoPercentualGordura(percentualGordura.getUsuario().getId());
+		double resultPercentualGordura = imcDao.calculoPercentualGordura(percentualGordura.getImc().getId());
 		percentualGordura.setResultadoPercentual(resultPercentualGordura);
 
 		
@@ -43,14 +39,18 @@ public class PercentualGorduraService {
 	}
 	
 	public List<PercentualGordura> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
-		List<PercentualGordura> listaLogin = percentualGorduraDao.listar();
+		List<PercentualGordura> listaPercentual = percentualGorduraDao.listar();
 		
 		List<PercentualGordura> newList = new ArrayList<PercentualGordura>();
 		
-		for (PercentualGordura percentualGordura : listaLogin) {
-			if (percentualGordura.getUsuario() != null) {
-				Usuario usuario = usuarioDao.pesquisar(percentualGordura.getUsuario().getId());
-				percentualGordura.setUsuario(usuario);
+		for (PercentualGordura percentualGordura : listaPercentual) {
+			if (percentualGordura.getImc() != null) {
+				Imc imc = imcDao.pesquisar(percentualGordura.getImc().getId());
+				percentualGordura.setImc(imc);
+			}
+			if(percentualGordura.getImc().getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(percentualGordura.getImc().getUsuario().getId());
+				percentualGordura.getImc().setUsuario(usuario);
 			}
 			
 			newList.add(percentualGordura);
@@ -63,9 +63,9 @@ public class PercentualGorduraService {
 	public PercentualGordura pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
 		PercentualGordura percentualGordura = percentualGorduraDao.pesquisar(id);
 		
-		if (percentualGordura.getUsuario() != null) {
-			Usuario usuario = usuarioDao.pesquisar(percentualGordura.getUsuario().getId());
-			percentualGordura.setUsuario(usuario);
+		if (percentualGordura.getImc() != null) {
+			Imc imc = imcDao.pesquisar(percentualGordura.getImc().getId());
+			percentualGordura.setImc(imc);
 		}
 		
 		return percentualGordura;

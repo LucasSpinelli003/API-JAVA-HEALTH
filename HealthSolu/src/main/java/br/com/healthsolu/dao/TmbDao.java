@@ -98,7 +98,7 @@ import br.com.healthsolu.model.Usuario;
 					ResultSet result = stm.executeQuery();
 
 					if (!result.next()) {
-						throw new IdNotFoundException("Endereco usuario não encontrado");
+						throw new IdNotFoundException("Tmb não encontrado");
 					}
 					Tmb tmb = parse(result);
 					return tmb;

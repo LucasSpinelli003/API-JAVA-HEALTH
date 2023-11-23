@@ -53,7 +53,7 @@ public class TmbResource {
 		return service.listar();
 	}
 
-	//GET http://localhost:8080/HealthSolu/api/tmb /1 (Pesquisar pelo Id)
+	//GET http://localhost:8080/HealthSolu/api/tmb/1 (Pesquisar pelo Id)
 		@GET
 		@Path("/{id}")
 		@Produces(MediaType.APPLICATION_JSON)

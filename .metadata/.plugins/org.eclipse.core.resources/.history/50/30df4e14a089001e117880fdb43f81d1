@@ -1,0 +1,10 @@
+package br.com.healthsolu.exception;
+
+public class ObesidadeNotFoundException extends Exception {
+
+	public ObesidadeNotFoundException(String message) {
+		super(message);
+	}
+	
+}
+

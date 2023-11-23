@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +48,7 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_imc (id_imc, id_usuario,"
-							+ "resultado_imc,doencas_relacionadas,prevencao_doencas) "
+							+ "resultado_imc,doencas_relacionadas,prevencao_doencas, grau) "
 							+ "values (?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
@@ -53,6 +56,7 @@ import br.com.healthsolu.model.Usuario;
 					stm.setDouble(3, imc.getResultadoImc());
 					stm.setString(4, imc.getDoencasRelacionadas());
 					stm.setString(5, imc.getPrevencaoDoencas());
+					stm.setString(6, imc.getGrau());
 					
 					stm.executeUpdate();
 				}
@@ -63,8 +67,9 @@ import br.com.healthsolu.model.Usuario;
 					double resultadoImc = result.getDouble("resultado_imc");
 					String doencasRelacionadas = result.getString("doencas_relacionadas");
 					String prevencaoDeDoencas = result.getString("prevencao_doencas");
+					String grau = result.getString("grau");
 					
-					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas);
+					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas,grau);
 					
 					if (id_usuario != 0) {
 						Usuario usuario = new Usuario();
@@ -73,6 +78,23 @@ import br.com.healthsolu.model.Usuario;
 					}
 					
 					return imc;
+				}
+				
+				private Usuario parseUsuario(ResultSet result) throws SQLException {
+					int id = result.getInt("ID_USUARIO");
+					String nome = result.getString("NM_COMPLETO");
+					String email = result.getString("EMAIL");
+					String telefone = result.getString("TELEFONE");
+					String senha = result.getString("SENHA");
+					double peso = result.getDouble("PESO");
+					double altura = result.getDouble("ALTURA");
+					String sexo = result.getString("GENERO");
+					LocalDateTime dataNascimento = result.getObject("DATA_NASCIMENTO", LocalDateTime.class);
+					
+					Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento);
+					
+					
+					return usuario;
 				}
 				
 				public List<Imc> listar() throws ClassNotFoundException, SQLException {
@@ -102,6 +124,46 @@ import br.com.healthsolu.model.Usuario;
 					}
 					Imc imc = parse(result);
 					return imc;
+				}
+				
+				public double calculoPercentualGordura(int id) throws SQLException, IdNotFoundException, GenderNotFoundException {
+					PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_imc where id_imc = ?");
+					
+					stm.setInt(1, id);
+
+					ResultSet result = stm.executeQuery();
+
+					if (!result.next()) {
+						throw new IdNotFoundException("Imc não encontrado");
+					}
+					Imc imc = parse(result);
+					
+					
+					PreparedStatement stmUsuario = conn.prepareStatement("select * from" + " t_sip_usuario where id_usuario = ?");
+					stmUsuario.setInt(1, imc.getUsuario().getId());
+
+					ResultSet resultUsuario = stmUsuario.executeQuery();
+
+					if (!resultUsuario.next()) {
+						throw new IdNotFoundException("Usuario não encontrado");
+					}
+					Usuario usuario = parseUsuario(resultUsuario);
+					LocalDateTime dataNascimento = usuario.getDataNascimento();
+
+			        LocalDate dataAtual = LocalDate.now();
+
+			        double bT = 0;
+			        
+			        int idade = Period.between(dataNascimento.toLocalDate(), dataAtual).getYears();
+			        
+			        if(usuario.getSexo().equalsIgnoreCase("M")) {
+			            bT = (1.20 * imc.getResultadoImc()) + (0.23 * idade) - (10.8 * 1) - 5.4;
+			        } else if(usuario.getSexo().equalsIgnoreCase("F")) {
+			            bT = (1.20 * imc.getResultadoImc()) + (0.23 * idade) - (10.8 * 0) - 5.4;
+			        } else {
+			            throw new GenderNotFoundException("O sexo só pode ser 'F' ou 'M'");
+			        }
+			        return bT;
 				}
 				
 				

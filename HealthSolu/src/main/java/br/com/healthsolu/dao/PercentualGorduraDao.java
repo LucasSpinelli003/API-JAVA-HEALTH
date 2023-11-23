@@ -45,23 +45,21 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					
-					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_percentual_gordura(ID_PERCENTUAL_GORDURA, ID_USUARIO,"
+					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_percentual_gordura(ID_PERCENTUAL_GORDURA,"
 							+ "ID_IMC,RESULTADO_PERC_GORDURA,DOENCAS_RELACIONADAS,PREVENCAO_DOENCAS) "
-							+ "values (?, ?, ?, ?, ?, ?)");
+							+ "values (?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
-					stm.setInt(2, percentualGordura.getUsuario().getId());
-					stm.setDouble(3, percentualGordura.getImc().getId());
-					stm.setDouble(4, percentualGordura.getResultadoPercentual());
-					stm.setString(5, percentualGordura.getDoencasRelacionadas());
-					stm.setString(6,percentualGordura.getPrevencaoDoencas());
+					stm.setDouble(2, percentualGordura.getImc().getId());
+					stm.setDouble(3, percentualGordura.getResultadoPercentual());
+					stm.setString(4, percentualGordura.getDoencasRelacionadas());
+					stm.setString(5,percentualGordura.getPrevencaoDoencas());
 					
 					stm.executeUpdate();
 				}
 				
 				private PercentualGordura parse(ResultSet result) throws SQLException {
 					int id = result.getInt("ID_PERCENTUAL_GORDURA");
-					int id_usuario = result.getInt("ID_USUARIO");
 					int id_imc = result.getInt("ID_IMC");
 					double resultadoPercentual = result.getDouble("RESULTADO_PERC_GORDURA");
 					String doencasRelacionadas = result.getString("DOENCAS_RELACIONADAS");
@@ -69,11 +67,6 @@ import br.com.healthsolu.model.Usuario;
 					
 					PercentualGordura percentualGordura = new PercentualGordura(id,resultadoPercentual,doencasRelacionadas,prevencaoDoencas);
 					
-					if (id_usuario != 0) {
-						Usuario usuario = new Usuario();
-						usuario.setId(id_usuario);
-						percentualGordura.setUsuario(usuario);
-					}
 					if (id_imc != 0) {
 						Imc imc = new Imc();
 						imc.setId(id_imc);
@@ -106,7 +99,7 @@ import br.com.healthsolu.model.Usuario;
 					ResultSet result = stm.executeQuery();
 
 					if (!result.next()) {
-						throw new IdNotFoundException("Imc não encontrado");
+						throw new IdNotFoundException("Percentual de Gordura não encontrado");
 					}
 					PercentualGordura percentualGordura = parse(result);
 					return percentualGordura;

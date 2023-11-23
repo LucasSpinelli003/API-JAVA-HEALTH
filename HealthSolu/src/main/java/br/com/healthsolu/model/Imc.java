@@ -1,5 +1,7 @@
 package br.com.healthsolu.model;
 
+import br.com.healthsolu.exception.GrauNotFoundException;
+
 public class Imc {
 	
 	private int id;
@@ -7,16 +9,54 @@ public class Imc {
 	private double resultadoImc;
 	private String doencasRelacionadas;
 	private String prevencaoDoencas;
+	private String grau;
 	
+	
+	
+	//Acima de 40,0. Obesidade. grau III. ...
+	//Entre 35,0 e 39,9. Obesidade. grau II. ...
+	//Entre 30,0 e 34,9. Obesidade grau I. Sinal de alerta! ...
+	//Entre 25,0 e 29,9. Sobrepeso. ...
+	//Entre 18,6 e 24,9. Normal. ...
+	//18,5 ou menos. Abaixo do normal.
+	
+	
+	public void calculaGrau() throws GrauNotFoundException {
+		if(resultadoImc<= 18.5) {
+			grau = "Abaixo do normal";
+		}else if(resultadoImc >= 18.6 || resultadoImc<= 24.9 ) {
+			grau = "Normal";
+		}else if(resultadoImc >= 25.0  || resultadoImc<= 29.9) {
+			grau = "Sobrepeso";
+		}else if(resultadoImc >= 30.0  || resultadoImc<= 34.9) {
+			grau = "Obesidade grau 1";
+		}else if(resultadoImc >= 35.0  || resultadoImc<= 39.9) {
+			grau = "Obesidade grau 2";
+		}else if(resultadoImc>=40) {
+			grau = "Obesidade grau 3";
+		}else{
+			throw new GrauNotFoundException("Calculo do Grau incorreto");
+		}
+	}
 	public Imc() {}
 	
-	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas) {
+	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String grau) {
 		super();
 		this.id = id;
 		this.resultadoImc = resultadoImc;
 		this.doencasRelacionadas = doencasRelacionadas;
 		this.prevencaoDoencas = prevencaoDoencas;
+		this.grau = grau;
 	}
+
+	public String getGrau() {
+		return grau;
+	}
+
+	public void setGrau(String grau) {
+		this.grau = grau;
+	}
+
 	public int getId() {
 		return id;
 	}
