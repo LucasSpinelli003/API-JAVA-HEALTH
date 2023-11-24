@@ -111,7 +111,7 @@ public class UsuarioDao {
 	
 	public void atualizar(Usuario usuario) throws ClassNotFoundException, SQLException, IdNotFoundException {
 
-		PreparedStatement stm = conn.prepareStatement("update t_sip_usuario set nm_completo = ?, email = ?, telefone = ?, peso= ?, altura = ?  where id_usuario = ?");
+		PreparedStatement stm = conn.prepareStatement("update t_sip_usuario set nm_usuario = ?, email = ?, telefone = ?, peso= ?, altura = ?  where id_usuario = ?");
 		
 		stm.setString(1, usuario.getNome());
 		stm.setString(2, usuario.getEmail());
