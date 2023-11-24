@@ -1,0 +1,22 @@
+package br.com.healthsolu.model;
+
+public class Relatorio {
+
+	
+	private int id;
+	
+	public Relatorio() {}
+
+	public Relatorio(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Relatorio(int id) {
+		super();
+		this.id = id;
+	}
+	
+	
+	
+}

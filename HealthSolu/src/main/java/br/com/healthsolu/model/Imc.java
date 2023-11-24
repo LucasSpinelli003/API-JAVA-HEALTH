@@ -10,6 +10,7 @@ public class Imc {
 	private String doencasRelacionadas;
 	private String prevencaoDoencas;
 	private String classificacao;
+	private double estimativaPercGordura;
 	
 	
 	
@@ -63,15 +64,27 @@ public class Imc {
 		}
 	}
 	public Imc() {}
-	
-	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String classificacao) {
+
+	public Imc(int id, double resultadoImc, String doencasRelacionadas, String prevencaoDoencas, String classificacao,
+			double estimativaPercGordura) {
 		super();
 		this.id = id;
 		this.resultadoImc = resultadoImc;
 		this.doencasRelacionadas = doencasRelacionadas;
 		this.prevencaoDoencas = prevencaoDoencas;
 		this.classificacao = classificacao;
+		this.estimativaPercGordura = estimativaPercGordura;
 	}
+
+	public double getEstimativaPercGordura() {
+		return estimativaPercGordura;
+	}
+
+
+	public void setEstimativaPercGordura(double estimativaPercGordura) {
+		this.estimativaPercGordura = estimativaPercGordura;
+	}
+
 
 	public String getClassificacao() {
 		return classificacao;

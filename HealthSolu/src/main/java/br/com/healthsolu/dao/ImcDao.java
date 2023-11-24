@@ -48,8 +48,8 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_imc (id_imc, id_usuario,"
-							+ "resultado_imc,doencas_relacionadas,prevencao_doencas, classificacao) "
-							+ "values (?, ?, ?, ?, ?, ?)");
+							+ "resultado_imc,doencas_relacionadas,prevencao_doencas, classificacao, estimativa_perc_gordura) "
+							+ "values (?, ?, ?, ?, ?, ?, ?)");
 
 					stm.setInt(1, id);
 					stm.setInt(2, imc.getUsuario().getId());
@@ -57,6 +57,7 @@ import br.com.healthsolu.model.Usuario;
 					stm.setString(4, imc.getDoencasRelacionadas());
 					stm.setString(5, imc.getPrevencaoDoencas());
 					stm.setString(6, imc.getClassificacao());
+					stm.setDouble(7, imc.getEstimativaPercGordura());
 					
 					stm.executeUpdate();
 				}
@@ -68,8 +69,9 @@ import br.com.healthsolu.model.Usuario;
 					String doencasRelacionadas = result.getString("doencas_relacionadas");
 					String prevencaoDeDoencas = result.getString("prevencao_doencas");
 					String classificacao = result.getString("classificacao");
+					double estimativaPercGordura = result.getDouble("estimativa_perc_gordura");
 					
-					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas,classificacao);
+					Imc imc = new Imc(id,resultadoImc,doencasRelacionadas,prevencaoDeDoencas,classificacao,estimativaPercGordura);
 					
 					if (id_usuario != 0) {
 						Usuario usuario = new Usuario();
@@ -90,8 +92,10 @@ import br.com.healthsolu.model.Usuario;
 					double altura = result.getDouble("ALTURA");
 					String sexo = result.getString("GENERO");
 					LocalDateTime dataNascimento = result.getObject("DATA_NASCIMENTO", LocalDateTime.class);
+					String objetivo = result.getString("objetivo");
+					String fatorAtividade = result.getString("fatorAtividade");
 					
-					Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento);
+					Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento,objetivo,fatorAtividade);
 					
 					
 					return usuario;
@@ -127,7 +131,7 @@ import br.com.healthsolu.model.Usuario;
 				}
 				
 				public double calculoPercentualGordura(int id) throws SQLException, IdNotFoundException, GenderNotFoundException {
-					PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_imc where id_imc = ?");
+					PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_imc where id_usuario = ?");
 					
 					stm.setInt(1, id);
 
@@ -140,7 +144,7 @@ import br.com.healthsolu.model.Usuario;
 					
 					
 					PreparedStatement stmUsuario = conn.prepareStatement("select * from" + " t_sip_usuario where id_usuario = ?");
-					stmUsuario.setInt(1, imc.getUsuario().getId());
+					stmUsuario.setInt(1, id);
 
 					ResultSet resultUsuario = stmUsuario.executeQuery();
 
@@ -156,9 +160,9 @@ import br.com.healthsolu.model.Usuario;
 			        
 			        int idade = Period.between(dataNascimento.toLocalDate(), dataAtual).getYears();
 			        
-			        if(usuario.getSexo().equalsIgnoreCase("M")) {
+			        if(usuario.getSexo().equalsIgnoreCase("Masculino")) {
 			            bT = (1.20 * imc.getResultadoImc()) + (0.23 * idade) - (10.8 * 1) - 5.4;
-			        } else if(usuario.getSexo().equalsIgnoreCase("F")) {
+			        } else if(usuario.getSexo().equalsIgnoreCase("Feminino")) {
 			            bT = (1.20 * imc.getResultadoImc()) + (0.23 * idade) - (10.8 * 0) - 5.4;
 			        } else {
 			            throw new GenderNotFoundException("O sexo só pode ser 'F' ou 'M'");

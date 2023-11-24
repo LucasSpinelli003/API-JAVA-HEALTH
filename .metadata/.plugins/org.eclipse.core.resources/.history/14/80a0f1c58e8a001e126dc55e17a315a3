@@ -1,0 +1,8 @@
+package br.com.healthsolu.dao;
+
+public class Snippet {
+	public static void main(String[] args) {
+		objetivo
+	}
+}
+

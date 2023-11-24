@@ -13,12 +13,14 @@ public class Usuario {
 	private double altura;
 	private String telefone;
 	private LocalDateTime dataNascimento;
+	private String objetivo;
+	private String fatorAtividade;
 
 	
 	public Usuario() {};
 
 	public Usuario(int id, String nome, String email, String senha, double peso, String sexo, double altura,
-			String telefone, LocalDateTime dataNascimento) {
+			String telefone, LocalDateTime dataNascimento, String objetivo, String fatorAtividade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -29,11 +31,25 @@ public class Usuario {
 		this.altura = altura;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
+		this.objetivo = objetivo;
+		this.fatorAtividade = fatorAtividade;
 	}
 
 
+	public String getObjetivo() {
+		return objetivo;
+	}
 
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
+	}
 
+	public String getFatorAtividade() {
+		return fatorAtividade;
+	}
+	public void setFatorAtividade(String fatorAtividade) {
+		this.fatorAtividade = fatorAtividade;
+	}
 	public String getTelefone() {
 		return telefone;
 	}

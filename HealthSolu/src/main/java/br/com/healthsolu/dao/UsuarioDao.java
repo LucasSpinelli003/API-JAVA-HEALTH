@@ -42,8 +42,8 @@ public class UsuarioDao {
 		id = lista.size() + 1;
 		
 		PreparedStatement stm = conn.prepareStatement("INSERT INTO T_SIP_USUARIO (ID_USUARIO,"
-				+ " NM_COMPLETO,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ " NM_COMPLETO,EMAIL,TELEFONE,SENHA,PESO,ALTURA,GENERO,DATA_NASCIMENTO,OBJETIVO,FATOR_ATIVIDADE)"
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		stm.setInt(1, id);
 		stm.setString(2, login.getNome());
@@ -54,6 +54,8 @@ public class UsuarioDao {
 		stm.setDouble(7, login.getAltura());
 		stm.setString(8, login.getSexo());
 		stm.setObject(9, login.getDataNascimento());
+		stm.setString(10, login.getObjetivo());
+		stm.setString(11, login.getFatorAtividade());
 		
 		stm.executeUpdate();
 	}
@@ -68,8 +70,10 @@ public class UsuarioDao {
 		double altura = result.getDouble("ALTURA");
 		String sexo = result.getString("GENERO");
 		LocalDateTime dataNascimento = result.getObject("DATA_NASCIMENTO", LocalDateTime.class);
+		String objetivo = result.getString("OBJETIVO");
+		String fatorAtividade = result.getString("FATOR_ATIVIDADE");
 		
-		Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento);
+		Usuario usuario = new Usuario(id,nome,email,senha,peso,sexo,altura,telefone,dataNascimento,objetivo,fatorAtividade);
 		
 		
 		return usuario;
@@ -123,14 +127,14 @@ public class UsuarioDao {
         int idade = Period.between(dataNascimento.toLocalDate(), dataAtual).getYears();
         
       
-        if (usuario.getSexo().equalsIgnoreCase("M")) {
+        if (usuario.getSexo().equalsIgnoreCase("Masculino")) {
             double tmb = 88.362 + (13.397 * usuario.getPeso()) + (4.799 * usuario.getAltura()) - (5.677 * idade);
             return tmb;
-        } else if (usuario.getSexo().equalsIgnoreCase("F")) {
+        } else if (usuario.getSexo().equalsIgnoreCase("Feminino")) {
             double tmb = 447.593 + (9.247 * usuario.getPeso()) + (3.098 * usuario.getAltura()) - (4.330 * idade);
             return tmb;
         }else {
-        	throw new GenderNotFoundException("O sexo pode ser M ou F");
+        	throw new GenderNotFoundException("O sexo pode ser Masculino ou Feminino");
         }
 	}
 	public double calculoImc(int id) throws SQLException, IdNotFoundException {
@@ -148,6 +152,24 @@ public class UsuarioDao {
         double imc = usuario.getPeso()/(usuario.getAltura()*usuario.getAltura());
         
         return imc;
+	}
+	
+	public boolean autenticaLogin(Usuario usuarioCheck) throws SQLException, IdNotFoundException {
+		PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_usuario where email = ?");
+		
+		stm.setString(1, usuarioCheck.getEmail());
+
+		ResultSet result = stm.executeQuery();
+
+		if (!result.next()) {
+			throw new IdNotFoundException("Usuario não encontrado");
+		}
+		Usuario usuario = parse(result);
+		
+		if(usuarioCheck.getSenha().equals(usuario.getSenha())) {
+			return true;
+		}
+		return false;
 	}
 
 	

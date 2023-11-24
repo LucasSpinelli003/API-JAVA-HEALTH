@@ -1,0 +1,104 @@
+package br.com.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.healthsolu.dao.ImcDao;
+import br.com.healthsolu.dao.RelatorioDao;
+import br.com.healthsolu.dao.TmbDao;
+import br.com.healthsolu.dao.UsuarioDao;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.ClassificationNotFoundException;
+import br.com.healthsolu.exception.GenderNotFoundException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.Imc;
+import br.com.healthsolu.model.Relatorio;
+import br.com.healthsolu.model.Tmb;
+import br.com.healthsolu.model.Usuario;
+
+public class RelatorioService {
+	private UsuarioDao usuarioDao;
+	private RelatorioDao relatorioDao;
+	private ImcDao imcDao;
+	private TmbDao tmbDao;
+	
+	public RelatorioService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		usuarioDao = new UsuarioDao(conn);
+		relatorioDao = new RelatorioDao(conn);
+		imcDao = new ImcDao(conn);
+		tmbDao = new TmbDao(conn);
+		
+		}
+	
+
+	public void cadastrar(Relatorio relatorio) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, ClassificationNotFoundException {
+		relatorioDao.cadastrar(relatorio);
+	}
+	
+	public List<Relatorio> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+		List<Relatorio> listaLogin = relatorioDao.listar();
+		
+		List<Relatorio> newList = new ArrayList<Relatorio>();
+		
+		for (Relatorio relatorio : listaLogin) {
+			if (relatorio.getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(relatorio.getUsuario().getId());
+				relatorio.setUsuario(usuario);
+			}
+			if(relatorio.getImc() != null) {
+				Imc imc = imcDao.pesquisar(relatorio.getUsuario().getId());
+				relatorio.setImc(imc);
+				if(imc.getUsuario() != null) {
+					Usuario usuario = usuarioDao.pesquisar(imc.getUsuario().getId());
+					imc.setUsuario(usuario);
+				}
+			}
+			if(relatorio.getTmb() != null) {
+				Tmb tmb = tmbDao.pesquisar(relatorio.getUsuario().getId());
+				relatorio.setTmb(tmb);
+				if(tmb.getUsuario() != null) {
+					Usuario usuario = usuarioDao.pesquisar(relatorio.getUsuario().getId());
+					tmb.setUsuario(usuario);
+				}
+			}
+			
+			newList.add(relatorio);
+			
+		}
+		
+		return newList;
+	}
+	
+	public Relatorio pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+		Relatorio relatorio = relatorioDao.pesquisar(id);
+		
+		if (relatorio.getUsuario() != null) {
+			Usuario usuario = usuarioDao.pesquisar(relatorio.getUsuario().getId());
+			relatorio.setUsuario(usuario);
+		}
+		if(relatorio.getImc() != null) {
+			Imc imc = imcDao.pesquisar(relatorio.getUsuario().getId());
+			relatorio.setImc(imc);
+			if(imc.getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(imc.getUsuario().getId());
+				imc.setUsuario(usuario);
+			}
+		}
+		if(relatorio.getTmb() != null) {
+			Tmb tmb = tmbDao.pesquisar(relatorio.getUsuario().getId());
+			relatorio.setTmb(tmb);
+			if(tmb.getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(relatorio.getUsuario().getId());
+				tmb.setUsuario(usuario);
+			}
+		}
+		
+		return relatorio;
+	}
+	
+	}
+	

@@ -1,0 +1,123 @@
+package br.com.healthsolu.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.GenderNotFoundException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.model.Imc;
+import br.com.healthsolu.model.Relatorio;
+import br.com.healthsolu.model.Tmb;
+import br.com.healthsolu.model.Usuario;
+
+
+	public class RelatorioDao {
+	
+		private Connection conn;
+		
+		
+		public RelatorioDao(Connection conn) {
+			super();
+			this.conn = conn;
+		}
+
+				public void cadastrar(Relatorio relatorio) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException {
+					PreparedStatement stmm = conn.prepareStatement("select * from t_sip_relatorio");
+
+					ResultSet resultGet = stmm.executeQuery();
+
+					List<Relatorio> lista = new ArrayList<Relatorio>();
+
+					int id = 0;
+				
+					while (resultGet.next()) {
+						Relatorio relatorioGet = parse(resultGet);
+						lista.add(relatorioGet);
+					}
+					if(lista.size() == 0) {
+						 id = 1;
+					}
+					id = lista.size() + 1;
+					
+					
+					
+					PreparedStatement stm = conn.prepareStatement("INSERT INTO t_sip_relatorio (id_relatorio, id_usuario,"
+							+ "id_imc,id_tmb) "
+							+ "values (?, ?, ?, ?)");
+
+					stm.setInt(1, id);
+					stm.setInt(2, relatorio.getUsuario().getId());
+					stm.setInt(3, relatorio.getImc().getId());
+					stm.setInt(4, relatorio.getTmb().getId());
+	
+					
+					stm.executeUpdate();
+				}
+				
+				private Relatorio parse(ResultSet result) throws SQLException {	
+					int id = result.getInt("id_relatorio");
+					int id_usuario = result.getInt("id_usuario");
+					int id_imc = result.getInt("id_imc");
+					int id_tmb = result.getInt("id_tmb");
+					
+					Relatorio relatorio = new Relatorio(id);
+					
+					if (id_usuario != 0) {
+						Usuario usuario = new Usuario();
+						usuario.setId(id_usuario);
+						relatorio.setUsuario(usuario);
+					}
+					if (id_imc != 0) {
+						Imc imc = new Imc();
+						imc.setId(id_imc);
+						relatorio.setImc(imc);
+					}
+					if (id_tmb != 0) {
+						Tmb tmb = new Tmb();
+						tmb.setId(id_tmb);
+						relatorio.setTmb(tmb);
+					}
+					
+					
+					return relatorio;
+				}
+				
+				public List<Relatorio> listar() throws ClassNotFoundException, SQLException {
+
+					PreparedStatement stm = conn.prepareStatement("select * from t_sip_relatorio");
+
+					ResultSet result = stm.executeQuery();
+
+					List<Relatorio> lista = new ArrayList<Relatorio>();
+
+					while (result.next()) {
+						Relatorio relatorio = parse(result);
+						lista.add(relatorio);
+					}
+					return lista;
+				}
+				public Relatorio pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+
+					PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_relatorio where id_imc = ?");
+
+					stm.setInt(1, id);
+
+					ResultSet result = stm.executeQuery();
+
+					if (!result.next()) {
+						throw new IdNotFoundException("Imc não encontrado");
+					}
+					Relatorio relatorio = parse(result);
+					return relatorio;
+				}
+				
+
+				
+				
+		
+	}	
+

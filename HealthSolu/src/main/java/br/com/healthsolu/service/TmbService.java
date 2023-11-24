@@ -28,7 +28,6 @@ public class TmbService {
 	
 
 	public void cadastrar(Tmb tmb) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, ClassificationNotFoundException {
-		tmb.calculaClassificacao();
 		double resultTmb = usuarioDao.calculoTmb(tmb.getUsuario().getId());
 		tmb.setResultadoTmb(resultTmb);
 
