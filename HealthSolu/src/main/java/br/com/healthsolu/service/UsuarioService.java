@@ -27,6 +27,10 @@ public class UsuarioService {
 		return loginDao.listar();
 	}
 	
+	public void atualizar(Usuario usuario) throws ClassNotFoundException, SQLException, IdNotFoundException, BadInfoException {
+		loginDao.atualizar(usuario);
+	}
+	
 	public Usuario pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
 		Usuario lg = loginDao.pesquisar(id);
 		

@@ -1,0 +1,39 @@
+package br.com.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import br.com.healthsolu.dao.ImcDao;
+import br.com.healthsolu.dao.LoginDao;
+import br.com.healthsolu.dao.UsuarioDao;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.GenderNotFoundException;
+import br.com.healthsolu.exception.GrauNotFoundException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.Imc;
+import br.com.healthsolu.model.Login;
+import br.com.healthsolu.model.Usuario;
+
+public class LoginService {
+	private LoginDao loginDao;
+	
+	public LoginService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		loginDao = new LoginDao(conn);
+		
+		}
+	
+
+	public void cadastrar(String email, String senha) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, GrauNotFoundException {
+		loginDao.autenticaLogin(email, senha);
+	}
+	
+
+	
+
+	
+	}
+	

@@ -1,0 +1,41 @@
+package br.com.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import br.com.healthsolu.dao.UsuarioDao;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.factory.ConnectionFactory;
+
+import br.com.healthsolu.model.Usuario;
+
+public class UsuarioService {
+	private UsuarioDao loginDao;
+	
+	public UsuarioService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		loginDao = new UsuarioDao(conn);
+		}
+	
+
+	public void cadastrar(Usuario login) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException {
+		loginDao.cadastrar(login);
+	}
+	
+	public List<Usuario> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+		return loginDao.listar();
+	}
+	
+	public void atualizar(Usuario usuario) throws ClassNotFoundException, SQLException, IdNotFoundException, BadInfoException {
+		usuarioDao.atualizar(usuario);
+	}
+	
+	public Usuario pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+		Usuario lg = loginDao.pesquisar(id);
+		
+		return lg;
+	}
+	
+	}
+	

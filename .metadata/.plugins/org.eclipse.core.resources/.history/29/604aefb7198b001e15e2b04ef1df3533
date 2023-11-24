@@ -1,0 +1,76 @@
+package br.com.healthsolu.service;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.healthsolu.dao.ImcDao;
+import br.com.healthsolu.dao.UsuarioDao;
+import br.com.healthsolu.exception.BadInfoException;
+import br.com.healthsolu.exception.GenderNotFoundException;
+import br.com.healthsolu.exception.GrauNotFoundException;
+import br.com.healthsolu.exception.IdNotFoundException;
+import br.com.healthsolu.factory.ConnectionFactory;
+import br.com.healthsolu.model.Imc;
+import br.com.healthsolu.model.Usuario;
+
+public class LoginService {
+	private UsuarioDao usuarioDao;
+	private ImcDao imcDao;
+	
+	public LoginService() throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+		usuarioDao = new UsuarioDao(conn);
+		imcDao = new ImcDao(conn);
+		
+		}
+	
+
+	public void cadastrar(Imc imc) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, GrauNotFoundException {
+		double resultImc = usuarioDao.calculoImc(imc.getUsuario().getId());
+		imc.setResultadoImc(resultImc);
+		double resultPercentualGordura = imcDao.calculoPercentualGordura(imc.getUsuario().getId());
+		imc.setEstimativaPercGordura(resultPercentualGordura);
+
+		imc.calculaGrau();
+		imc.calculaDoencas();
+		
+
+		
+		imcDao.cadastrar(imc);
+	}
+	
+	public List<Imc> listar() throws ClassNotFoundException, SQLException, IdNotFoundException{
+		List<Imc> listaLogin = imcDao.listar();
+		
+		List<Imc> newList = new ArrayList<Imc>();
+		
+		for (Imc imc : listaLogin) {
+			if (imc.getUsuario() != null) {
+				Usuario usuario = usuarioDao.pesquisar(imc.getUsuario().getId());
+				imc.setUsuario(usuario);
+			}
+			
+			newList.add(imc);
+			
+		}
+		
+		
+		
+		return newList;
+	}
+	
+	public Imc pesquisar(int id) throws ClassNotFoundException, SQLException, IdNotFoundException {
+		Imc imc = imcDao.pesquisar(id);
+		
+		if (imc.getUsuario() != null) {
+			Usuario usuario = usuarioDao.pesquisar(imc.getUsuario().getId());
+			imc.setUsuario(usuario);
+		}
+		
+		return imc;
+	}
+	
+	}
+	

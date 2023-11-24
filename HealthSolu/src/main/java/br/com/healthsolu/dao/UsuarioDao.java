@@ -109,6 +109,23 @@ public class UsuarioDao {
 		return login;
 	}
 	
+	public void atualizar(Usuario usuario) throws ClassNotFoundException, SQLException, IdNotFoundException {
+
+		PreparedStatement stm = conn.prepareStatement("update t_sip_chamado set nome = ?, email = ?, telefone = ?, peso= ?, altura = ?  where id_usuario = ?");
+		
+		stm.setString(1, usuario.getNome());
+		stm.setString(2, usuario.getEmail());
+		stm.setString(3, usuario.getTelefone());
+		stm.setDouble(4, usuario.getPeso());
+		stm.setDouble(5, usuario.getAltura());
+		stm.setInt(6,usuario.getId());
+		
+		int linha = stm.executeUpdate();
+		if (linha == 0)
+			throw new IdNotFoundException("Usuario não encontrado para atualizar");
+	}
+	
+	
 	public double calculoTmb(int id) throws SQLException, IdNotFoundException, GenderNotFoundException {
 		PreparedStatement stm = conn.prepareStatement("select * from" + " t_sip_usuario where id_usuario = ?");
 		

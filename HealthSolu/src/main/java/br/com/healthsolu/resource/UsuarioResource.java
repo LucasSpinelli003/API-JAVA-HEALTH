@@ -9,6 +9,7 @@ import br.com.healthsolu.service.UsuarioService;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -62,6 +63,21 @@ public class UsuarioResource {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
+		//PUT http://localhost:8080/Solutech/api/chamado/1 (Atualizar um produto)
+		@PUT
+		@Path("/{id}")
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Response atualizar(Usuario usuario, @PathParam("id") int id) throws ClassNotFoundException, SQLException {
+			try {
+				usuario.setId(id);
+				service.atualizar(usuario);
+				return Response.ok().build();
+			} catch (IdNotFoundException e) {
+				return Response.status(Status.NOT_FOUND).build();
+			} catch (BadInfoException e) {
+				return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
+		}
 
 
 
