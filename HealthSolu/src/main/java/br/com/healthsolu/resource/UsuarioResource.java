@@ -63,7 +63,7 @@ public class UsuarioResource {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
-		//PUT http://localhost:8080/Solutech/api/chamado/1 (Atualizar um produto)
+		//PUT http://localhost:8080/Solutech/api/usuario/1 (Atualizar um produto)
 		@PUT
 		@Path("/{id}")
 		@Consumes(MediaType.APPLICATION_JSON)

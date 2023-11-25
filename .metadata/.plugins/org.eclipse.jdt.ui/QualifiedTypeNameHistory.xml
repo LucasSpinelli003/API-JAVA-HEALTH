@@ -6,7 +6,6 @@
     <fullyQualifiedTypeName name="br.com.fiap.helthsolu.exception.BadInfoException"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="br.com.healthsolu.dao.LoginDao"/>
     <fullyQualifiedTypeName name="br.com.healthsolu.factory.ConnectionFactory"/>
     <fullyQualifiedTypeName name="jakarta.ws.rs.Path"/>
     <fullyQualifiedTypeName name="jakarta.ws.rs.POST"/>
@@ -17,7 +16,6 @@
     <fullyQualifiedTypeName name="jakarta.ws.rs.GET"/>
     <fullyQualifiedTypeName name="jakarta.ws.rs.Produces"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="br.com.healthsolu.model.Login"/>
     <fullyQualifiedTypeName name="br.com.fiap.healthsolu.resource.ContatoUsuarioResource"/>
     <fullyQualifiedTypeName name="br.com.fiap.healthsolu.service.ContatoUsuarioService"/>
     <fullyQualifiedTypeName name="br.com.fiap.healthsolu.service.EnderecoUsuarioService"/>
@@ -28,8 +26,6 @@
     <fullyQualifiedTypeName name="br.com.healthsolu.dao.EnderecoUsuarioDao"/>
     <fullyQualifiedTypeName name="br.com.healthsolu.model.EnderecoUsuario"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="br.com.healthsolu.model.Usuario"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="java.time.Period"/>
     <fullyQualifiedTypeName name="br.com.fiap.healthsolu.exception.GenderNotFoundException"/>
@@ -39,4 +35,14 @@
     <fullyQualifiedTypeName name="br.com.healthsolu.exception.ClassificationNotFoundException"/>
     <fullyQualifiedTypeName name="br.com.healthsolu.model.Dieta"/>
     <fullyQualifiedTypeName name="br.com.healthsolu.dao.DietaDao"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.dao.LoginDao"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.exception.BadInfoException"/>
+    <fullyQualifiedTypeName name="org.apache.tomcat.util.descriptor.web.LoginConfig"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.service.LoginService"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.model.Usuario"/>
+    <fullyQualifiedTypeName name="jakarta.ws.rs.FormParam"/>
+    <fullyQualifiedTypeName name="br.com.healthsolu.model.Login"/>
+    <fullyQualifiedTypeName name="jakarta.ws.rs.PUT"/>
+    <fullyQualifiedTypeName name="jakarta.xml.bind.annotation.XmlRootElement"/>
 </qualifiedTypeNameHistroy>

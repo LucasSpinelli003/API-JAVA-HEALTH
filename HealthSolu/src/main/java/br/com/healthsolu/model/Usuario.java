@@ -2,9 +2,6 @@ package br.com.healthsolu.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Usuario {
 	
 	private int id;

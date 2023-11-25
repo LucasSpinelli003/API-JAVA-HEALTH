@@ -30,7 +30,7 @@ public class ImcService {
 	public void cadastrar(Imc imc) throws ClassNotFoundException, SQLException, BadInfoException, IdNotFoundException, GenderNotFoundException, GrauNotFoundException {
 		double resultImc = usuarioDao.calculoImc(imc.getUsuario().getId());
 		imc.setResultadoImc(resultImc);
-		double resultPercentualGordura = imcDao.calculoPercentualGordura(imc.getUsuario().getId());
+		double resultPercentualGordura = imcDao.calculoPercentualGordura(imc);
 		imc.setEstimativaPercGordura(resultPercentualGordura);
 
 		imc.calculaGrau();
