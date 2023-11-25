@@ -50,7 +50,7 @@ public class RelatorioService {
 				relatorio.setUsuario(usuario);
 			}
 			if(relatorio.getImc() != null) {
-				Imc imc = imcDao.pesquisar(relatorio.getImc().getId());
+				Imc imc = imcDao.pesquisar(relatorio.getUsuario().getId());
 				relatorio.setImc(imc);
 				if(imc.getUsuario() != null) {
 					Usuario usuario = usuarioDao.pesquisar(imc.getUsuario().getId());
@@ -58,7 +58,7 @@ public class RelatorioService {
 				}
 			}
 			if(relatorio.getTmb() != null) {
-				Tmb tmb = tmbDao.pesquisar(relatorio.getTmb().getId());
+				Tmb tmb = tmbDao.pesquisar(relatorio.getUsuario().getId());
 				relatorio.setTmb(tmb);
 				if(tmb.getUsuario() != null) {
 					Usuario usuario = usuarioDao.pesquisar(relatorio.getUsuario().getId());
